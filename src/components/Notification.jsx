@@ -1,3 +1,5 @@
+//This `Notification.jsx` component displays a temporary pop-up message in the top-right corner, automatically disappearing after 3 seconds using a `useEffect` timer, providing users with unobtrusive feedback for actions like reminders or updates.
+
 import React, { useEffect } from 'react';
 
 // Notification pop-up component
