@@ -1,3 +1,5 @@
+//This `ScheduleView` component is a fully interactive, visually appealing React component that renders a multi-day schedule as a responsive grid of cards. Each day’s card allows users to quickly add activities, remove the day, or drag-and-drop activities between days, while each activity supports inline editing for time, duration, and vibe, as well as quick actions like moving up/down, deleting, or opening a Google Maps link. The component leverages TailwindCSS for polished styling, including gradients, shadows, hover effects, and responsive layouts, making it both functional and user-friendly for managing and visualizing a dynamic schedule.
+
 import React from 'react';
 
 const ScheduleView = ({ schedule, theme, uid, addToSchedule, setSchedule, allowDrop, onDropOnDay, editingId, setEditingId, form, setForm, saveEdit, startEditing, moveWithinSchedule, removeFromSchedule, onDragStart }) => (
