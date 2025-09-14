@@ -1,3 +1,5 @@
+//This `PosterCard.jsx` component generates a visually styled poster of the weekend schedule, displaying each day’s activities with time, title, estimated duration, and vibe, using color-coded accents and responsive layout, and supports a `ref` for capturing the poster via `html2canvas` or PDF export.
+
 import React from "react";
 
 const accentColors = [
