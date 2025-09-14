@@ -1,3 +1,5 @@
+//This `ActivityList.jsx` component renders the activity library panel, providing a searchable, draggable list of activities with category icons, quick-add buttons for schedule days, and delete functionality, while styling each item with the selected theme and handling empty states gracefully.
+
 import React from 'react';
 import ActivityIcon from './ActivityIcon';
 
