@@ -1,3 +1,4 @@
+//This App.jsx is the main React component for the Weekendly app, managing the state and functionality for activities, schedules, reminders, theming, and exporting plans, while integrating child components like Header, WeatherWidget, ActivityList, ScheduleView, PlanTools, and PosterCard, and handling persistence with localStorage, drag-and-drop scheduling, and poster preview using html2canvas and jsPDF
 import React, { useEffect, useState, useRef } from "react";
 import WeatherWidget from "./components/WeatherWidget";
 import Header from "./components/Header";
@@ -7,7 +8,7 @@ import PlanTools from "./components/PlanTools";
 import Notification from "./components/Notification";
 import html2canvas from "html2canvas";
 import PosterCard from "./components/PosterCard";
-import jsPDF from "jspdf";
+import {jsPDF} from "jspdf";
 
 const SAMPLE_ACTIVITIES = [
   { id: "a1", title: "Brunch", cat: "Food", est: "1.5h", vibe: "Relaxed" },
