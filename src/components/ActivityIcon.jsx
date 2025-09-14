@@ -1,3 +1,5 @@
+//This `ActivityIcon.jsx` component maps activity categories to corresponding Heroicons, returning a styled SVG icon based on the `category` prop, with a default icon for any unspecified category, enhancing the UI’s visual clarity and consistency.
+
 import React from 'react';
 import {
   SunIcon,
