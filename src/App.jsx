@@ -7,6 +7,7 @@ import PlanTools from "./components/PlanTools";
 import Notification from "./components/Notification";
 import html2canvas from "html2canvas";
 import PosterCard from "./components/PosterCard";
+import jsPDF from "jspdf";
 
 const SAMPLE_ACTIVITIES = [
   { id: "a1", title: "Brunch", cat: "Food", est: "1.5h", vibe: "Relaxed" },
@@ -84,6 +85,7 @@ export default function App() {
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ time: "", vibe: "", est: "" });
   const [activeMessage, setActiveMessage] = useState(null);
+  const [showPosterModal, setShowPosterModal] = useState(false);
 
   const posterRef = useRef(null);
 
@@ -195,20 +197,7 @@ export default function App() {
   }
 
   const sharePlanAsPoster = () => {
-    if (!posterRef.current) return;
-
-    html2canvas(posterRef.current, {
-      backgroundColor: "#ffffff",
-      scale: 2,
-      useCORS: true,
-    })
-      .then((canvas) => {
-        const link = document.createElement("a");
-        link.download = `weekendly-plan-${new Date().toISOString().slice(0, 10)}.png`;
-        link.href = canvas.toDataURL();
-        link.click();
-      })
-      .catch((err) => console.error("Error generating poster:", err));
+    setShowPosterModal(true);
   };
 
   function clearSchedule() {
@@ -337,10 +326,22 @@ export default function App() {
         </footer>
       </div>
 
-      {/* Hidden PosterCard for capture */}
-      <div style={{ position: "absolute", top: "-9999px", left: "-9999px" }}>
-        <PosterCard ref={posterRef} schedule={schedule} />
-      </div>
+      {showPosterModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 relative min-w-[650px]">
+            {/* Always-visible Close button, top-right, bold, colored, accessible */}
+            <button
+              onClick={() => setShowPosterModal(false)}
+              className="absolute top-3 right-3 px-4 py-2 bg-red-500 text-white rounded-full text-lg font-bold shadow-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 z-50"
+              aria-label="Close poster modal"
+            >
+              Close ✕
+            </button>
+            <PosterCard ref={posterRef} schedule={schedule} />
+            <div className="text-center mt-4 text-sm text-gray-500">Preview your poster below.</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
