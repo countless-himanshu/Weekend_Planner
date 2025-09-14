@@ -1,3 +1,5 @@
+//This `WeatherWidget` component is a dynamic, visually polished React component that fetches and displays the weather forecast for the days in a given schedule. It automatically detects the user’s location (with a fallback to Bhilai, India) and retrieves daily weather data from the Open-Meteo API, mapping weather codes to icons and descriptions. The component handles loading states, errors, and gracefully displays a card-based forecast grid with day names, temperatures, and weather icons. TailwindCSS is used extensively to create a clean, responsive, and user-friendly interface with gradients, shadows, and hover effects, making it a highly interactive and informative weather overview tied to the user’s planned activities.
+
 import React, { useEffect, useState } from 'react';
 
 const WeatherWidget = ({ schedule }) => {
