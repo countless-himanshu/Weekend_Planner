@@ -1,3 +1,4 @@
+//This `Header.jsx` component renders the app’s top section with the title, subtitle, theme selector, and action buttons for exporting or printing the plan, styled with the selected theme and responsive layout to provide a polished, user-friendly header.
 import React from 'react';
 
 const Header = ({ selectedTheme, setSelectedTheme, theme, exportPlan }) => (
