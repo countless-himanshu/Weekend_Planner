@@ -1,124 +1,69 @@
-// import React from "react";
-
-// const PosterCard = ({ schedule }) => (
-//   <div
-//     id="poster-card"
-//     className="w-[500px] bg-gradient-to-br from-yellow-100 via-white to-blue-100 rounded-2xl shadow-2xl p-6 font-sans"
-//   >
-//     <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">📅 My Plan</h2>
-//     {Object.keys(schedule).map((day) => (
-//       <div key={day} className="mb-4">
-//         <h3 className="text-lg font-semibold text-blue-700 capitalize">🌟 {day}</h3>
-//         <ul className="list-none ml-4">
-//           {schedule[day].map((item) => (
-//             <li key={item.id} className="text-gray-700">
-//               ⏰ {item.time || "—"} — <span className="font-medium">{item.title}</span> ({item.est}, {item.vibe})
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
-//     ))}
-//     <p className="text-xs text-gray-500 text-center mt-6">✨ Generated with My Planner ✨</p>
-//   </div>
-// );
-
-// export default PosterCard;
-
 import React from "react";
 
-const PosterCard = ({ schedule }) => {
-  // Check if schedule has any data
+const accentColors = [
+  "#6366f1", // indigo
+  "#f59e42", // orange
+  "#10b981", // green
+  "#f472b6", // pink
+  "#fbbf24", // yellow
+  "#38bdf8", // blue
+];
+
+const PosterCard = React.forwardRef(({ schedule }, ref) => {
   const hasScheduleData = schedule && Object.keys(schedule).some(day => 
     schedule[day] && schedule[day].length > 0
   );
 
-  if (!hasScheduleData) {
-    return (
-      <div
-        id="poster-card"
-        className="w-[500px] bg-gradient-to-br from-yellow-100 via-white to-blue-100 rounded-2xl shadow-2xl p-6 font-sans"
-        style={{ minHeight: '400px' }}
-      >
-        <h2 className="text-2xl font-bold text-center mb-4 text-gray-800">📅 My Plan</h2>
-        <div className="text-center text-gray-500 py-8">
-          <p className="text-lg">No activities scheduled yet!</p>
-          <p className="text-sm mt-2">Add some activities to your schedule to create a poster.</p>
-        </div>
-        <div className="mt-8 pt-4 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">✨ Generated with My Planner ✨</p>
-          <p className="text-xs text-gray-400 text-center mt-1">
-            {new Date().toLocaleDateString()}
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
+      ref={ref}
       id="poster-card"
-      className="w-[500px] bg-gradient-to-br from-yellow-100 via-white to-blue-100 rounded-2xl shadow-2xl p-6 font-sans"
-      style={{ minHeight: '400px' }}
+      className="w-[600px] h-[850px] bg-gradient-to-br from-indigo-100 via-white to-blue-100 rounded-3xl shadow-2xl p-10 font-sans flex flex-col justify-between border-4 border-indigo-200"
+      style={{ minHeight: '800px', minWidth: '600px' }}
     >
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">📅 My Weekend Plan</h2>
-        <p className="text-sm text-gray-600">
-          {new Date().toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          })}
-        </p>
+      <div>
+        <h1 className="text-4xl font-extrabold text-center text-indigo-700 mb-2 tracking-tight drop-shadow-lg">Weekend Activity Planner</h1>
+        <p className="text-center text-lg text-gray-600 mb-8">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+        {!hasScheduleData ? (
+          <div className="flex flex-col items-center justify-center h-96">
+            <p className="text-2xl text-gray-400 mb-2">No activities scheduled yet!</p>
+            <p className="text-base text-gray-400">Add some activities to your schedule to create a poster.</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {Object.keys(schedule)
+              .filter(day => schedule[day] && schedule[day].length > 0)
+              .map((day, i) => (
+                <div key={day} className="bg-white/80 rounded-2xl p-6 shadow-md border-l-8" style={{ borderColor: accentColors[i % accentColors.length] }}>
+                  <h2 className="text-2xl font-bold text-indigo-600 capitalize mb-4 flex items-center gap-2">
+                    <span className="text-2xl">
+                      {day === 'saturday' ? '🌟' : day === 'sunday' ? '☀️' : '📅'}
+                    </span>
+                    {day.charAt(0).toUpperCase() + day.slice(1)}
+                  </h2>
+                  <ul className="space-y-3">
+                    {schedule[day].map((item, idx) => (
+                      <li key={item.id || idx} className="flex items-center gap-4 bg-indigo-50 rounded-xl px-4 py-2 shadow-sm">
+                        <span className="text-indigo-400 text-xl">⏰</span>
+                        <span className="font-semibold text-gray-800 w-20">{item.time || "09:00"}</span>
+                        <span className="text-gray-500">—</span>
+                        <span className="font-bold text-indigo-700 flex-1 truncate">{item.title}</span>
+                        <span className="text-xs text-white bg-indigo-400 px-2 py-1 rounded-full">{item.est || "1h"}</span>
+                        <span className="text-xs text-indigo-600 bg-indigo-100 px-2 py-1 rounded-full">{item.vibe || ""}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+          </div>
+        )}
       </div>
-      
-      <div className="space-y-6">
-        {Object.keys(schedule)
-          .filter(day => schedule[day] && schedule[day].length > 0)
-          .map((day) => (
-            <div key={day} className="bg-white/60 rounded-xl p-4 shadow-sm">
-              <h3 className="text-lg font-semibold text-blue-700 capitalize mb-3 flex items-center">
-                <span className="mr-2 text-xl">
-                  {day === 'saturday' ? '🌟' : day === 'sunday' ? '☀️' : '📅'}
-                </span>
-                {day.charAt(0).toUpperCase() + day.slice(1)}
-              </h3>
-              
-              <div className="space-y-2">
-                {schedule[day].map((item, index) => (
-                  <div key={item.id || index} className="flex items-center text-gray-700 bg-white/40 rounded-lg p-2">
-                    <div className="flex items-center min-w-0 flex-1">
-                      <span className="text-blue-500 mr-2 text-sm">⏰</span>
-                      <span className="font-medium text-gray-800 mr-2">
-                        {item.time || "09:00"}
-                      </span>
-                      <span className="text-gray-500 mr-2">—</span>
-                      <span className="font-semibold text-gray-900 mr-2 truncate">
-                        {item.title}
-                      </span>
-                    </div>
-                    <div className="flex-shrink-0">
-                      <span className="text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full">
-                        {item.est || "1h"}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-      </div>
-      
-      <div className="mt-8 pt-4 border-t border-gray-300">
-        <div className="text-center">
-          <p className="text-xs text-gray-500">✨ Generated with My Planner ✨</p>
-          <p className="text-xs text-gray-400 mt-1">
-            Created on {new Date().toLocaleDateString()}
-          </p>
-        </div>
+      <div className="mt-10 pt-6 border-t border-indigo-200 text-center">
+        <p className="text-base text-indigo-500 font-semibold">✨ Generated with Weekendly ✨</p>
+        <p className="text-xs text-gray-400 mt-1">{new Date().toLocaleDateString()}</p>
       </div>
     </div>
   );
-};
+});
 
 export default PosterCard;
