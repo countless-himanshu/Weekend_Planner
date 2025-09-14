@@ -1,3 +1,5 @@
+//This `PlanTools.jsx` component provides a set of action buttons for managing the schedule, including adding a new day, clearing the entire schedule, exporting the plan, or sharing it as a poster, with theme-based styling and responsive, interactive UI elements.
+
 import React from "react";
 
 const PlanTools = ({ theme, clearSchedule, exportPlan, sharePlanAsPoster, addDay }) => (
